@@ -7,13 +7,20 @@ import (
 	"testing"
 )
 
+const (
+	WAT  = "WORKPLACE_ACCESS_TOKEN"
+	WGIT = "WORKPLACE_GROUP_ID_TEST"
+)
+
 var cmdPath = "github.com/bornlogic/wiw/cmd/workplace/groupSend"
-var accessTokenTest = os.Getenv("WORKPLACE_ACCESS_TOKEN")
-var groupIdTest = os.Getenv("WORKPLACE_GROUP_ID_TEST")
+
+var accessTokenTest = os.Getenv(WAT)
+var groupIdTest = os.Getenv(WGIT)
 
 // TestGroupSend tests if workflow to send a message to an group is worked
 // For run this test you need to assign the envs VARS WORKPLACE_ACCESS_TOKEN and WORKPLACE_GROUP_ID_TEST
 func TestGroupSend(t *testing.T) {
+	checkRequirements(t)
 	runGroupSend(t, accessTokenTest, groupIdTest, "PLAINTEXT", "workplace group send integration test")
 }
 
@@ -36,6 +43,16 @@ func runGroupSend(t *testing.T, accessToken, groupId, formatting, message string
 	t.Logf("stderr: %s", outErr.String())
 
 	if err != nil {
-		t.Fatalf(err)
+		t.Fatal(err)
+	}
+}
+
+func checkRequirements(t *testing.T) {
+	const errMsgFmt = "please set env %s for can run the test"
+	if accessTokenTest == "" {
+		t.Fatalf(errMsgFmt, WAT)
+	}
+	if groupIdTest == "" {
+		t.Fatalf(errMsgFmt, WGIT)
 	}
 }
