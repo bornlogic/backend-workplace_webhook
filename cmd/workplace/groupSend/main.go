@@ -73,7 +73,7 @@ func checkArgs(accessToken, groupID, formatting, message string) error {
 func init() {
 	const shortHandSuffix = "(shorthand)"
 
-	const usageAccessToken = "access token used to connect with workplace api"
+	const usageAccessToken = "access token used to connect with workplace api, if empty it will use the env `WORKPLACE_ACCESS_TOKEN`"
 	flag.StringVar(&accessToken, "access-token", DefaultAccessToken, usageAccessToken)
 	flag.StringVar(&accessToken, "t", DefaultAccessToken, usageAccessToken+shortHandSuffix)
 
