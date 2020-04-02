@@ -7,9 +7,13 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/bornlogic/wiw/workplace"
 )
+
+// if access token isn't passed by flag, use value of env `WORKPLACE_ACCESS_TOKEN`
+var DefaultAccessToken = os.Getenv("WORKPLACE_ACCESS_TOKEN")
 
 // args for function for send to GroupSend
 var accessToken, groupID, formatting, message string
@@ -70,8 +74,8 @@ func init() {
 	const shortHandSuffix = "(shorthand)"
 
 	const usageAccessToken = "access token used to connect with workplace api"
-	flag.StringVar(&accessToken, "access-token", "", usageAccessToken)
-	flag.StringVar(&accessToken, "t", "", usageAccessToken+shortHandSuffix)
+	flag.StringVar(&accessToken, "access-token", DefaultAccessToken, usageAccessToken)
+	flag.StringVar(&accessToken, "t", DefaultAccessToken, usageAccessToken+shortHandSuffix)
 
 	const usageGroupID = "group id of group for send the message"
 	flag.StringVar(&groupID, "group-id", "", usageGroupID)
