@@ -44,7 +44,7 @@ For any webhook, you have a path for use it, so is listenning on `<ip>:<port>/<s
 You have an url like `localhost:3000/github` waiting for webhooks comming from github  
 
 Now you need configure in the repository for receive the webhook  
-if you are running localhost, you can use [ngrop](https://ngrok.com/download) for expose the service  
+if you are running localhost, you can use [ngrok](https://ngrok.com/download) for expose the service  
 
 Inside your repository on github in configuration you have the option `Webhooks` ([verify](https://developer.github.com/webhooks/) if is available)
 Example: https://github.com/bornlogic/wiw/settings/hooks
