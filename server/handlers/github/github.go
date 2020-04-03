@@ -25,7 +25,7 @@ const (
 	EUnreadableBodyFmt  = "can't read body: %s"
 	EUnexpectedBodyFmt  = "can't unmarshal %s from body: %s"
 	ERequest            = "Error returned on request to api: %s"
-	EUnexpectedStatus   = "unexpected staus returned from api: %s"
+	EUnexpectedStatus   = "unexpected status returned from api: %s"
 )
 
 // handler is the abstraction about github handler
