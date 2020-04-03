@@ -8,7 +8,7 @@ This receives payloads from mapped webhook and convert it in a message to the gi
 
 Export `WORKPLACE_ACCESS_TOKEN` with your api token givened by workplace
 
-This access token will be used for send message in group, without this, you can't connect with workplace  
+This access token will be used for send message in group, without this, you can't connect with workplace.
 if you need help to generate a token check [the guide to generate a new token](./doc/WORKPLACE_GENERATE_TOKEN.md).
 
 ```sh
@@ -33,7 +33,7 @@ You can use:
 ``` sh
 $ sudo make install
 ```
-it will build and copy the two binaries generated for `/usr/local/bin` folder  
+it will build and copy the binaries generated for `/usr/local/bin` folder  
 
 For custom path specify `bin` var  
 You can use:
