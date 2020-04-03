@@ -23,21 +23,23 @@ $ make build
 
 it will generate two binaries:
 - `wiw` the server used for start
-- `wSendToGroup` used to send message to a given group by cli
+- `wSendToGroup` used to send message to a given group by clim
 
 ## Install
 
 You can use:
 ``` sh
-$ make install
+$ sudo make install
 ```
-it will build and copy the two binaries generated for `/usr/local/bin` folder or custom path specified by `bin` var  
+it will build and copy the two binaries generated for `/usr/local/bin` folder  
+
+For custom path specify `bin` var  
 You can use:
 ``` sh
-$ make install bin=$HOME/gobin
+$ make install bin=$HOME/bin
 ```
 
-Or if you prefer you can get by go:
+Or if you prefer you can get by `go`:
 
 ``` sh
 $ go get github.com/bornlogic/wiw/cmd/...
