@@ -7,7 +7,7 @@ Server for integration of [Workplace](https://www.workplace.com/) with Webhooks
 Export `WORKPLACE_ACCESS_TOKEN` with your api token givened by workplace
 
 This access token will be used for send message in group, without this, you can't connect with workplace  
-see: [Workplace Generate New Token](./doc/WORKPLACE_GENERATE_TOKEN.md)
+if you need help to generate a token check [the guide to generate a new token](./doc/WORKPLACE_GENERATE_TOKEN.md).
 
 ```sh
 $ export WORKPLACE_ACCESS_TOKEN="< api token >"
@@ -69,7 +69,7 @@ $ make serve args="-p :8080"
 
 ## Find GroupID
 
-Inside a group you can check in url of workspace the groupID [see](https://developers.facebook.com/docs/workplace/reference/graph-api/group/):  
+Inside a group you can check in url of workspace the groupID. [[see](https://developers.facebook.com/docs/workplace/reference/graph-api/group/)]:  
 Example:  
 url of group: https://enterprise.workplace.com/chat/t/123456789026103  
 groupID: `123456789026103`  
@@ -77,7 +77,7 @@ groupID: `123456789026103`
 ## Server Configuration
 
 Server contains the webhooks mapped internally, from now, it contains:
- - Github, events: (issues, push on master, pull_request) [see](https://developer.github.com/webhooks/#events)
+ - Github, mapped events: issues, push on master, pull_request. [[see](https://developer.github.com/webhooks/#events)]
 
 For any webhook, you have a path for use it `{ip}:{port}/{service}/{groupID}`, eg: `localhost:3000/github/1203140219421`
 
