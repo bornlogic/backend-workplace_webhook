@@ -19,14 +19,14 @@ var cmdPath = "github.com/bornlogic/wiw/cmd/workplace/sendToGroup"
 var accessTokenTest = os.Getenv(WAT)
 var groupIdTest = os.Getenv(WGIT)
 
-// TestGroupSend tests if workflow to send a message to an group is worked
+// TestSendToGroup tests if workflow to send a message to an group is worked
 // For run this test you need to assign the envs VARS WORKPLACE_ACCESS_TOKEN and WORKPLACE_GROUP_ID_TEST
-func TestGroupSend(t *testing.T) {
+func TestSendToGroup(t *testing.T) {
 	checkRequirements(t)
-	runGroupSend(t, accessTokenTest, groupIdTest, "PLAINTEXT", "workplace group send integration test")
+	runSendToGroup(t, accessTokenTest, groupIdTest, "PLAINTEXT", "workplace group send integration test")
 }
 
-func runGroupSend(t *testing.T, accessToken, groupId, formatting, message string) {
+func runSendToGroup(t *testing.T, accessToken, groupId, formatting, message string) {
 	cmd := exec.Command(
 		"go", "run", cmdPath,
 		"--verbose",
