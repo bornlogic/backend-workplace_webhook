@@ -20,7 +20,7 @@ var accessTokenTest = os.Getenv(WAT)
 var groupIdTest = os.Getenv(WGIT)
 
 // TestSendToGroup tests if workflow to send a message to an group is worked
-// For run this test you need to assign the envs VARS WORKPLACE_ACCESS_TOKEN and WORKPLACE_GROUP_ID_TEST
+// For run this test you need to assign the envs WORKPLACE_ACCESS_TOKEN and WORKPLACE_GROUP_ID_TEST
 func TestSendToGroup(t *testing.T) {
 	checkRequirements(t)
 	runSendToGroup(t, accessTokenTest, groupIdTest, "PLAINTEXT", "workplace group send integration test")
