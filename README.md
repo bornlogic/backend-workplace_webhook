@@ -74,8 +74,8 @@ $ make serve args="-p :8080"
 Inside a group you can check in url of workspace the groupID [[see](https://developers.facebook.com/docs/workplace/reference/graph-api/group/)].  
   
 Example:  
-url of group: https://enterprise.workplace.com/chat/t/123456789026103  
-groupID: `123456789026103`  
+for group url: https://enterprise.workplace.com/chat/t/123456789026103  
+the groupID is: `123456789026103`  
 
 ## Server Configuration
 
