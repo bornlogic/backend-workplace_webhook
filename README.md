@@ -1,19 +1,21 @@
 # WIW - Workplace Integration Webhooks
 
-Server for integration of [Workplace](https://www.workplace.com/) with Webhooks
+Server for integration of [Workplace](https://www.workplace.com/) with Webhooks  
+
+This receives payloads from mapped webhook and convert it in a message to the givened workplace group.
 
 ## Setup
 
 Export `WORKPLACE_ACCESS_TOKEN` with your api token givened by workplace
 
-This access token will be used for send message in group, without this, you can't connect with workplace  
-see: [Workplace Generate New Token](./doc/WORKPLACE_GENERATE_TOKEN.md)
+This access token will be used for send message in group, without this, you can't connect with workplace.
+if you need help to generate a token check [the guide to generate a new token](./doc/WORKPLACE_GENERATE_TOKEN.md).
 
 ```sh
-$ export WORKPLACE_ACCESS_TOKEN="< api token >"
+$ export WORKPLACE_ACCESS_TOKEN="<accessToken>"
 ```
 
-## Build
+### Build
 
 For build you can use:
 
@@ -25,13 +27,13 @@ it will generate two binaries:
 - `wiw` the server used for start
 - `wSendToGroup` used to send message to a given group by clim
 
-## Install
+### Install
 
 You can use:
 ``` sh
 $ sudo make install
 ```
-it will build and copy the two binaries generated for `/usr/local/bin` folder  
+it will build and copy the binaries generated for `/usr/local/bin` folder  
 
 For custom path specify `bin` var  
 You can use:
@@ -59,26 +61,32 @@ $ wiw
 
 run on port 8080
 ``` sh
-$ wiw -p ":8080"
+$ wiw -p :8080
+```
+
+run by makefile
+```sh
+$ make serve args="-p :8080"
 ```
 
 ## Find GroupID
 
-Inside a group you can check in url of workspace the groupID [see](https://developers.facebook.com/docs/workplace/reference/graph-api/group/):  
+Inside a group you can check in url of workspace the groupID [[see](https://developers.facebook.com/docs/workplace/reference/graph-api/group/)].  
+  
 Example:  
-url of group: https://enterprise.workplace.com/chat/t/123456789026103  
-groupID: `123456789026103`  
+for group url: https://enterprise.workplace.com/chat/t/123456789026103  
+the groupID is: `123456789026103`  
 
 ## Server Configuration
 
 Server contains the webhooks mapped internally, from now, it contains:
- - Github, events: (issues, push on master, pull_request) [see](https://developer.github.com/webhooks/#events)
+ - Github, mapped events: issues, push on master, pull_request [[see](https://developer.github.com/webhooks/#events)].
 
 For any webhook, you have a path for use it `{ip}:{port}/{service}/{groupID}`, eg: `localhost:3000/github/1203140219421`
 
 ### Github
 
-You have an url like `localhost:3000/github/<groupID>` waiting for webhooks comming from github  
+You have an url like `localhost:3000/github/{groupID}` waiting for webhooks comming from github  
 
 #### Configuration
 
@@ -88,7 +96,7 @@ Inside your repository in configuration you have the option `Webhooks` ([verify]
 Example: https://github.com/bornlogic/wiw/settings/hooks
 
 You will click `Add webhook` and put the url with service and groupID configured for receive the messages.
-Example: `https://eaa141a6.ngrok.io/github/<groupID>`
+Example: `https://eaa141a6.ngrok.io/github/{groupID}`
 
 make sure to enable events `issues`, `pull_request` and `push`.
 
@@ -165,7 +173,7 @@ run specific with args
 make test args="server/handlers/github/github_test.go -run=TestGithubServe/invalid_status_from -v"
 ```
 
-#### Integration Test
+#### Integration Tests
 
 Integration tests are disabled by default  
 
