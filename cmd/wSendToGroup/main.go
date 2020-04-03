@@ -1,4 +1,4 @@
-// sendToGroup is a cli for usage worksplace SendToGroup function
+// wSendToGroup is a cli for usage worksplace SendToGroup function
 package main
 
 import (

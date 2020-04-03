@@ -13,6 +13,36 @@ see: [Workplace Generate New Token](./doc/WORKPLACE_GENERATE_TOKEN.md)
 $ export WORKPLACE_ACCESS_TOKEN="< api token >"
 ```
 
+## Build
+
+For build you can use:
+
+``` sh
+$ make build
+```
+
+it will generate two binaries:
+- `wiw` the server used for start
+- `wSendToGroup` used to send message to a given group by cli
+
+## Install
+
+You can use:
+``` sh
+$ make install
+```
+it will build and copy the two binaries generated for `/usr/local/bin` folder or custom path specified by `bin` var  
+You can use:
+``` sh
+$ make install bin=$HOME/gobin
+```
+
+Or if you prefer you can get by go:
+
+``` sh
+$ go get github.com/bornlogic/wiw/cmd/...
+```
+
 ## Run
 
 After export the env you need to start the server in ./cmd/server/main.go
@@ -22,12 +52,12 @@ Examples:
 run on default port (:3000)
 
 ``` sh
-$ go run ./cmd/server/main.go
+$ wiw
 ```
 
 run on port 8080
 ``` sh
-$ go run ./cmd/server/main.go -p ":8080"
+$ wiw -p ":8080"
 ```
 
 ## Find GroupID
@@ -42,7 +72,7 @@ groupID: `123456789026103`
 Server contains the webhooks mapped internally, from now, it contains:
  - Github, events: (issues, push on master, pull_request) [see](https://developer.github.com/webhooks/#events)
 
-For any webhook, you have a path for use it, so is listenning on `<ip>:<port>/<service>`, eg: `localhost:3000/github`
+For any webhook, you have a path for use it `{ip}:{port}/{service}/{groupID}`, eg: `localhost:3000/github/1203140219421`
 
 ### Github
 
@@ -70,10 +100,10 @@ Open an issue to test this.
 
 cli used for send message to a given group
 
-For more help try `sendToGroup -h`:
+For more help try `wSendToGroup -h`:
 ``` sh
-$ sendToGroup -h
-Usage of sendToGroup:
+$ wSendToGroup -h
+Usage of wSendToGroup:
   -access-token WORKPLACE_ACCESS_TOKEN
         access token used to connect with workplace api, if empty it will use the env WORKPLACE_ACCESS_TOKEN
   -f string
@@ -99,7 +129,7 @@ Examples:
 
 verbose mode
 ``` sh
-$ sendToGroup --verbose \
+$ wSendToGroup --verbose \
 	--access-token <accessToken> \
 	--group-id <groupId> \
 	--formatting MARKDOWN \
@@ -108,7 +138,7 @@ $ sendToGroup --verbose \
 if `WORKPLACE_ACCESS_TOKEN` was setted you don't need pass the flag `--access-token`
 ``` sh
 $ export WORKPLACE_ACCESS_TOKEN=<accessToken>
-$ sendToGroup -g <groupId> -f MARKDOWN -m "HELLO WORLD"
+$ wSendToGroup -g <groupId> -f MARKDOWN -m "HELLO WORLD"
 ```
 
 ## Development
@@ -117,9 +147,9 @@ Some useful explains about development
 
 ### Requirements
 
-- [go](https://golang.org/)
+- [go](https://golang.org/) (for run without docker, outside the makefile)
   - [httprouter](http://github.com/julienschmidt/httprouter)
-- [docker](http://docker.com/) (to run without go, inside a makefile)
+- [docker](http://docker.com/) (for run without go, inside the makefile)
 
 ### Test
 

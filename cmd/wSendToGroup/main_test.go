@@ -14,7 +14,7 @@ const (
 	WGIT = "WORKPLACE_GROUP_ID_TEST"
 )
 
-var cmdPath = "github.com/bornlogic/wiw/cmd/workplace/sendToGroup"
+var cmdPath = "github.com/bornlogic/wiw/cmd/wSendToGroup"
 
 var accessTokenTest = os.Getenv(WAT)
 var groupIdTest = os.Getenv(WGIT)
