@@ -96,12 +96,12 @@ go run cmdPath --verbose \
 	--access-token <accessToken> \
 	--group-id <groupId> \
 	--formatting MARKDOWN \
-	--message "OLA MUNDO"
+	--message "HELLO WORLD"
 ```
 if `WORKPLACE_ACCESS_TOKEN` was setted you don't need pass the flag `--access-token`
 ``` sh
 export WORKPLACE_ACCESS_TOKEN=<accessToken>
-go run cmdPath -g <groupId> -f MARKDOWN -m "OLA MUNDO"
+go run cmdPath -g <groupId> -f MARKDOWN -m "HELLO WORLD"
 ```
 
 ## Development
