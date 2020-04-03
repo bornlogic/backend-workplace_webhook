@@ -195,6 +195,6 @@ make test args="./cmd/... -tags=integration"
 
 run specific integration test
 ``` sh
-make test args="./cmd/... "
+make test args="./cmd/wSendToGroup/main_test.go -run TestSendToGroup"
 ```
 
