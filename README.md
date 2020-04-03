@@ -173,7 +173,7 @@ run specific with args
 make test args="server/handlers/github/github_test.go -run=TestGithubServe/invalid_status_from -v"
 ```
 
-#### Integration Test
+#### Integration Tests
 
 Integration tests are disabled by default  
 
