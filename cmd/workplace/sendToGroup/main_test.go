@@ -1,3 +1,5 @@
+// +build integration
+
 package main_test
 
 import (
@@ -12,7 +14,7 @@ const (
 	WGIT = "WORKPLACE_GROUP_ID_TEST"
 )
 
-var cmdPath = "github.com/bornlogic/wiw/cmd/workplace/groupSend"
+var cmdPath = "github.com/bornlogic/wiw/cmd/workplace/sendToGroup"
 
 var accessTokenTest = os.Getenv(WAT)
 var groupIdTest = os.Getenv(WGIT)

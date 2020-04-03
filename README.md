@@ -65,9 +65,9 @@ Open a issue to test this.
 
 cli used for send message to a given group
 
-For more help try `groupSend -h`:
+For more help try `sendToGroup -h`:
 ``` sh
-Usage of groupSend:
+Usage of sendToGroup:
   -access-token WORKPLACE_ACCESS_TOKEN
         access token used to connect with workplace api, if empty it will use the env WORKPLACE_ACCESS_TOKEN
   -f string
@@ -89,10 +89,11 @@ Usage of groupSend:
         prints feedback of operations
 ```
 
-Examples:
+Examples:  
 
+verbose mode
 ``` sh
-go run cmdPath --verbose \
+groupSend --verbose \
 	--access-token <accessToken> \
 	--group-id <groupId> \
 	--formatting MARKDOWN \
@@ -101,7 +102,7 @@ go run cmdPath --verbose \
 if `WORKPLACE_ACCESS_TOKEN` was setted you don't need pass the flag `--access-token`
 ``` sh
 export WORKPLACE_ACCESS_TOKEN=<accessToken>
-go run cmdPath -g <groupId> -f MARKDOWN -m "HELLO WORLD"
+groupSend -g <groupId> -f MARKDOWN -m "HELLO WORLD"
 ```
 
 ## Development
@@ -112,11 +113,11 @@ Some useful explains about development
 
 - [go](https://golang.org/)
   - [httprouter](http://github.com/julienschmidt/httprouter)
-- [docker](http://docker.com/)
+- [docker](http://docker.com/) (to run without go, inside a makefile)
 
 ### Test
 
-run all tests
+run all unitary tests
 ``` sh
 make test
 ```
@@ -126,11 +127,17 @@ run specific with args
 make test args="server/handlers/github/github_test.go -run=TestGithubServe/invalid_status_from -v"
 ```
 
-### Integration Test
+#### Include Integration Tests
 
-For integration test you need to set `WORKPLACE_GROUP_ID_TEST` and `WORKPLACE_ACCESS_TOKEN` env for test if message is sended
+Integration tests are disabled by default  
 
+For integration test you need to set `WORKPLACE_GROUP_ID_TEST` and `WORKPLACE_ACCESS_TOKEN` env for test if message is sended  
+
+you need specify the build tag `integration` for run integration tests  
+   
+
+run all tests with integration tests included
 ``` sh
-
+make test args="./... -tags=integration"
 ```
 

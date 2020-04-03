@@ -10,8 +10,8 @@ import (
 	"time"
 )
 
-// tcasesGroupSend shares cases for creation of body based on given args
-var tcasesGroupSend = []struct{ name, accessToken, formatting, message, want string }{
+// tcasesSendToGroup shares cases for creation of body based on given args
+var tcasesSendToGroup = []struct{ name, accessToken, formatting, message, want string }{
 	{
 		name:        "empty inputs",
 		accessToken: "",
@@ -53,11 +53,11 @@ var tcasesGroupSend = []struct{ name, accessToken, formatting, message, want str
 	},
 }
 
-// TestGroupSendBody tests if sended args return the expected body
-func TestGroupSendBody(t *testing.T) {
-	for _, tc := range tcasesGroupSend {
+// TestSendToGroupBody tests if sended args return the expected body
+func TestSendToGroupBody(t *testing.T) {
+	for _, tc := range tcasesSendToGroup {
 		t.Run(tc.name, func(t *testing.T) {
-			got := newGroupSendBody(tc.accessToken, tc.formatting, tc.message)
+			got := newSendToGroupBody(tc.accessToken, tc.formatting, tc.message)
 			mustStrEqReader(t, tc.want, got)
 		})
 	}
@@ -75,12 +75,12 @@ func mustStrEqReader(t *testing.T, s string, r io.Reader) {
 	}
 }
 
-// TestGroupSendRequest verify if the given request created could be done in one server
-func TestGroupSendRequest(t *testing.T) {
+// TestSendToGroupRequest verify if the given request created could be done in one server
+func TestSendToGroupRequest(t *testing.T) {
 	var methods = [4]string{"POST", "GET", "PUT", "OPTIONS"}
 	len_methods := len(methods)
 	rand.Seed(time.Now().UnixNano())
-	for _, tc := range tcasesGroupSend {
+	for _, tc := range tcasesSendToGroup {
 		t.Run(tc.name, func(t *testing.T) {
 			method := methods[rand.Intn(len_methods)]
 			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -90,7 +90,7 @@ func TestGroupSendRequest(t *testing.T) {
 				mustStrEqReader(t, tc.want, r.Body)
 			}))
 			defer ts.Close()
-			req, err := newGroupSendRequest(method, ts.URL, tc.accessToken, tc.formatting, tc.message)
+			req, err := newSendToGroupRequest(method, ts.URL, tc.accessToken, tc.formatting, tc.message)
 			if err != nil {
 				t.Errorf("new group post request: %s", err)
 			}

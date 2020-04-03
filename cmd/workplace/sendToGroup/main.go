@@ -1,4 +1,4 @@
-// groupSend is a cli for usage worksplace SendGroup function
+// sendToGroup is a cli for usage worksplace SendToGroup function
 package main
 
 import (
@@ -15,7 +15,7 @@ import (
 // if access token isn't passed by flag, use value of env `WORKPLACE_ACCESS_TOKEN`
 var DefaultAccessToken = os.Getenv("WORKPLACE_ACCESS_TOKEN")
 
-// args for function for send to GroupSend
+// args for function for send to SendToGroup
 var accessToken, groupID, formatting, message string
 
 // print verbose mode
@@ -35,7 +35,7 @@ func main() {
 	}
 
 	verbose("do group send")
-	resp, err := workplace.GroupSend(accessToken, groupID, formatting, message)
+	resp, err := workplace.SendToGroup(accessToken, groupID, formatting, message)
 	if err != nil {
 		log.Fatal(err)
 	}

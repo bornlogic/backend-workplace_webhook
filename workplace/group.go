@@ -7,32 +7,34 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 )
 
-// GroupSend performs a postage in feed using markdown formatting
+// SendToGroup performs a postage in feed using markdown formatting
 // create request with the requirements of facebook developers api
 // see: https://developers.facebook.com/docs/groups-api/common-uses#posting-on-a-group
-func GroupSend(accessToken, groupID, formatting, message string) (*http.Response, error) {
+func SendToGroup(accessToken, groupID, formatting, message string) (*http.Response, error) {
 	const (
-		method = "POST"
 		URLFmt = "https://graph.facebook.com/%s/feed"
 	)
 	var (
 		url    = fmt.Sprintf(URLFmt, groupID)
-		client = &http.Client{}
+		client = &http.Client{
+			Timeout: time.Second * 10,
+		}
 	)
-	req, err := newGroupSendRequest(method, url, accessToken, formatting, message)
+	req, err := newSendToGroupRequest(http.MethodPost, url, accessToken, formatting, message)
 	if err != nil {
 		return nil, err
 	}
 	return client.Do(req)
 }
 
-func newGroupSendRequest(method, url, accessToken, formatting, message string) (*http.Request, error) {
-	return http.NewRequest(method, url, newGroupSendBody(accessToken, formatting, message))
+func newSendToGroupRequest(method, url, accessToken, formatting, message string) (*http.Request, error) {
+	return http.NewRequest(method, url, newSendToGroupBody(accessToken, formatting, message))
 }
 
-func newGroupSendBody(accessToken, formatting, message string) *strings.Reader {
+func newSendToGroupBody(accessToken, formatting, message string) *strings.Reader {
 	return strings.NewReader(
 		url.Values{
 			"access_token": {accessToken},
@@ -57,7 +59,7 @@ type groupSender struct {
 
 // Send a given message to a given group with internal accessToken
 func (g *groupSender) Send(groupID, message string) (*http.Response, error) {
-	return GroupSend(g.accessToken, groupID, g.formatting, message)
+	return SendToGroup(g.accessToken, groupID, g.formatting, message)
 }
 
 // NewGroupSender create a new groupSender with the given accessToken
