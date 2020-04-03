@@ -13,7 +13,7 @@ see: [Workplace Generate New Token](./doc/WORKPLACE_GENERATE_TOKEN.md)
 $ export WORKPLACE_ACCESS_TOKEN="< api token >"
 ```
 
-## Build
+### Build
 
 For build you can use:
 
@@ -25,7 +25,7 @@ it will generate two binaries:
 - `wiw` the server used for start
 - `wSendToGroup` used to send message to a given group by clim
 
-## Install
+### Install
 
 You can use:
 ``` sh
@@ -59,7 +59,12 @@ $ wiw
 
 run on port 8080
 ``` sh
-$ wiw -p ":8080"
+$ wiw -p :8080
+```
+
+run by makefile
+```sh
+$ make serve args="-p :8080"
 ```
 
 ## Find GroupID
