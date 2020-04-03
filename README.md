@@ -99,7 +99,7 @@ Examples:
 
 verbose mode
 ``` sh
-$ groupSend --verbose \
+$ sendToGroup --verbose \
 	--access-token <accessToken> \
 	--group-id <groupId> \
 	--formatting MARKDOWN \
@@ -108,7 +108,7 @@ $ groupSend --verbose \
 if `WORKPLACE_ACCESS_TOKEN` was setted you don't need pass the flag `--access-token`
 ``` sh
 $ export WORKPLACE_ACCESS_TOKEN=<accessToken>
-$ groupSend -g <groupId> -f MARKDOWN -m "HELLO WORLD"
+$ sendToGroup -g <groupId> -f MARKDOWN -m "HELLO WORLD"
 ```
 
 ## Development
