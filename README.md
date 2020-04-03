@@ -1,6 +1,8 @@
 # WIW - Workplace Integration Webhooks
 
-Server for integration of [Workplace](https://www.workplace.com/) with Webhooks
+Server for integration of [Workplace](https://www.workplace.com/) with Webhooks  
+
+This receives payloads from mapped webhook and convert it in a message to the givened workplace group.
 
 ## Setup
 
@@ -10,7 +12,7 @@ This access token will be used for send message in group, without this, you can'
 if you need help to generate a token check [the guide to generate a new token](./doc/WORKPLACE_GENERATE_TOKEN.md).
 
 ```sh
-$ export WORKPLACE_ACCESS_TOKEN="< api token >"
+$ export WORKPLACE_ACCESS_TOKEN="<accessToken>"
 ```
 
 ### Build
@@ -69,7 +71,8 @@ $ make serve args="-p :8080"
 
 ## Find GroupID
 
-Inside a group you can check in url of workspace the groupID. [[see](https://developers.facebook.com/docs/workplace/reference/graph-api/group/)]:  
+Inside a group you can check in url of workspace the groupID [[see](https://developers.facebook.com/docs/workplace/reference/graph-api/group/)].  
+  
 Example:  
 url of group: https://enterprise.workplace.com/chat/t/123456789026103  
 groupID: `123456789026103`  
@@ -77,13 +80,13 @@ groupID: `123456789026103`
 ## Server Configuration
 
 Server contains the webhooks mapped internally, from now, it contains:
- - Github, mapped events: issues, push on master, pull_request. [[see](https://developer.github.com/webhooks/#events)]
+ - Github, mapped events: issues, push on master, pull_request [[see](https://developer.github.com/webhooks/#events)].
 
 For any webhook, you have a path for use it `{ip}:{port}/{service}/{groupID}`, eg: `localhost:3000/github/1203140219421`
 
 ### Github
 
-You have an url like `localhost:3000/github/<groupID>` waiting for webhooks comming from github  
+You have an url like `localhost:3000/github/{groupID}` waiting for webhooks comming from github  
 
 #### Configuration
 
@@ -93,7 +96,7 @@ Inside your repository in configuration you have the option `Webhooks` ([verify]
 Example: https://github.com/bornlogic/wiw/settings/hooks
 
 You will click `Add webhook` and put the url with service and groupID configured for receive the messages.
-Example: `https://eaa141a6.ngrok.io/github/<groupID>`
+Example: `https://eaa141a6.ngrok.io/github/{groupID}`
 
 make sure to enable events `issues`, `pull_request` and `push`.
 
