@@ -35,10 +35,16 @@ $ sudo make install
 ```
 it will build and copy the binaries generated for `/usr/local/bin` folder  
 
-For custom path specify `bin` var  
-You can use:
+For custom path specify `prefix` or `binpath` vars
+
+For generate the files inside a bin folder in this path you can set `prefix`:
 ``` sh
-$ make install bin=$HOME/bin
+$ make install prefix=.
+```
+
+For install in your custom bin folder like `gobin` in your `$HOME` you can set `binpath`:
+``` sh
+$ make install binpath=$HOME/gobin
 ```
 
 Or if you prefer you can get by `go`:
