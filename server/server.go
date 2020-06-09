@@ -3,6 +3,7 @@ package server
 import (
 	"net/http"
 
+	"github.com/bornlogic/wiw/server/handlers/generic"
 	"github.com/bornlogic/wiw/server/handlers/github"
 	"github.com/bornlogic/wiw/workplace"
 	"github.com/julienschmidt/httprouter"
@@ -27,6 +28,9 @@ func NewServer(workplaceAccessToken, formatting string) *server {
 // setupHandlers configure all handlers exposed in server
 func (s *server) setupHandlers() {
 	s.router.POST("/github/:groupID", github.NewHandler(
+		workplace.NewGroupSender(s.workplaceAccessToken, s.formatting),
+	).Serve)
+	s.router.POST("/:groupID", generic.NewHandler(
 		workplace.NewGroupSender(s.workplaceAccessToken, s.formatting),
 	).Serve)
 }

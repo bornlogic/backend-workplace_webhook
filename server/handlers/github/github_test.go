@@ -9,6 +9,7 @@ import (
 
 	"strings"
 
+	"github.com/bornlogic/wiw/server/handlers"
 	"github.com/bornlogic/wiw/server/handlers/github"
 	"github.com/julienschmidt/httprouter"
 )
@@ -45,14 +46,14 @@ var githubServeTests = []struct {
 		name:     "missing body",
 		event:    "whatever",
 		wantCode: http.StatusBadRequest,
-		wantErr:  github.EMissingData,
+		wantErr:  handlers.EMissingData,
 	},
 	{
 		name:     "invalid body",
 		event:    "whatever",
 		bodyVal:  "badReader",
 		wantCode: http.StatusNotAcceptable,
-		wantErr:  fmt.Sprintf(github.EUnreadableBodyFmt, EReaderErr),
+		wantErr:  fmt.Sprintf(handlers.EUnreadableBodyFmt, EReaderErr),
 	},
 
 	// Event not mapped
@@ -69,7 +70,7 @@ var githubServeTests = []struct {
 		event:    "issues",
 		bodyVal:  "invalid",
 		wantCode: github.StatusResponseNotExpected,
-		wantErr: fmt.Sprintf(github.EUnexpectedBodyFmt, "issues",
+		wantErr: fmt.Sprintf(handlers.EUnexpectedBodyFmt, "issues",
 			"invalid character 'i' looking for beginning of value"),
 	},
 	{
@@ -77,7 +78,7 @@ var githubServeTests = []struct {
 		event:    "pull_request",
 		bodyVal:  "invalid",
 		wantCode: github.StatusResponseNotExpected,
-		wantErr: fmt.Sprintf(github.EUnexpectedBodyFmt, "pull_request",
+		wantErr: fmt.Sprintf(handlers.EUnexpectedBodyFmt, "pull_request",
 			"invalid character 'i' looking for beginning of value"),
 	},
 	{
@@ -85,7 +86,7 @@ var githubServeTests = []struct {
 		event:    "push",
 		bodyVal:  "invalid",
 		wantCode: github.StatusResponseNotExpected,
-		wantErr: fmt.Sprintf(github.EUnexpectedBodyFmt, "push",
+		wantErr: fmt.Sprintf(handlers.EUnexpectedBodyFmt, "push",
 			"invalid character 'i' looking for beginning of value"),
 	},
 
@@ -126,7 +127,7 @@ var githubServeTests = []struct {
 		bodyVal:     `{"action": "whatever"}`,
 		gsenderType: "error",
 		wantCode:    http.StatusServiceUnavailable,
-		wantErr:     fmt.Sprintf(github.ERequest, "error"),
+		wantErr:     fmt.Sprintf(handlers.ERequest, "error"),
 	},
 	{
 		name:        "error sent from pull_request",
@@ -134,7 +135,7 @@ var githubServeTests = []struct {
 		bodyVal:     `{"action": "whatever"}`,
 		gsenderType: "error",
 		wantCode:    http.StatusServiceUnavailable,
-		wantErr:     fmt.Sprintf(github.ERequest, "error"),
+		wantErr:     fmt.Sprintf(handlers.ERequest, "error"),
 	},
 	{
 		name:        "error sent from push in master",
@@ -142,7 +143,7 @@ var githubServeTests = []struct {
 		bodyVal:     `{"ref": "refs/heads/master"}`,
 		gsenderType: "error",
 		wantCode:    http.StatusServiceUnavailable,
-		wantErr:     fmt.Sprintf(github.ERequest, "error"),
+		wantErr:     fmt.Sprintf(handlers.ERequest, "error"),
 	},
 
 	// Invalid status code returned from api
@@ -152,7 +153,7 @@ var githubServeTests = []struct {
 		bodyVal:     `{"action": "whatever"}`,
 		gsenderType: "invalid_status",
 		wantCode:    http.StatusServiceUnavailable,
-		wantErr:     fmt.Sprintf(github.EUnexpectedStatus, "invalid"),
+		wantErr:     fmt.Sprintf(handlers.EUnexpectedStatus, "invalid"),
 	},
 	{
 		name:        "invalid status from pull_request",
@@ -160,7 +161,7 @@ var githubServeTests = []struct {
 		bodyVal:     `{"action": "whatever"}`,
 		gsenderType: "invalid_status",
 		wantCode:    http.StatusServiceUnavailable,
-		wantErr:     fmt.Sprintf(github.EUnexpectedStatus, "invalid"),
+		wantErr:     fmt.Sprintf(handlers.EUnexpectedStatus, "invalid"),
 	},
 	{
 		name:        "invalid status from push",
@@ -168,7 +169,7 @@ var githubServeTests = []struct {
 		bodyVal:     `{"ref": "refs/heads/master"}`,
 		gsenderType: "invalid_status",
 		wantCode:    http.StatusServiceUnavailable,
-		wantErr:     fmt.Sprintf(github.EUnexpectedStatus, "invalid"),
+		wantErr:     fmt.Sprintf(handlers.EUnexpectedStatus, "invalid"),
 	},
 }
 
