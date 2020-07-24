@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/bornlogic/wiw/server/handlers"
 	"github.com/bornlogic/wiw/server/models/github"
 	"github.com/bornlogic/wiw/workplace"
 	"github.com/julienschmidt/httprouter"
@@ -18,14 +19,9 @@ const HeaderEvent = "X-Github-Event"
 // Custom status code for response not expected
 const StatusResponseNotExpected = 516
 
-// Errors in string format useful to handle in Serve function
+// Custom errors gor github package
 const (
 	EMissingHeaderEvent = "missing " + HeaderEvent + " in header from response"
-	EMissingData        = "missing data in body"
-	EUnreadableBodyFmt  = "can't read body: %s"
-	EUnexpectedBodyFmt  = "can't unmarshal %s from body: %s"
-	ERequest            = "Error returned on request to api: %s"
-	EUnexpectedStatus   = "unexpected status returned from api: %s"
 )
 
 // handler is the abstraction about github handler
@@ -53,14 +49,14 @@ func (h *handler) Serve(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 
 	if r.Body == http.NoBody {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, EMissingData)
+		fmt.Fprintf(w, handlers.EMissingData)
 		return
 	}
 
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusNotAcceptable)
-		fmt.Fprintf(w, EUnreadableBodyFmt, err)
+		fmt.Fprintf(w, handlers.EUnreadableBodyFmt, err)
 		return
 	}
 	defer r.Body.Close()
@@ -75,7 +71,7 @@ func (h *handler) Serve(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 		var issues github.Issues
 		if err := json.Unmarshal(b, &issues); err != nil {
 			w.WriteHeader(StatusResponseNotExpected)
-			fmt.Fprintf(w, EUnexpectedBodyFmt, "issues", err)
+			fmt.Fprintf(w, handlers.EUnexpectedBodyFmt, "issues", err)
 			return
 		}
 		message = issues.ToMarkdown()
@@ -84,7 +80,7 @@ func (h *handler) Serve(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 		var pullRequest github.PullRequest
 		if err := json.Unmarshal(b, &pullRequest); err != nil {
 			w.WriteHeader(StatusResponseNotExpected)
-			fmt.Fprintf(w, EUnexpectedBodyFmt, "pull_request", err)
+			fmt.Fprintf(w, handlers.EUnexpectedBodyFmt, "pull_request", err)
 			return
 		}
 		message = pullRequest.ToMarkdown()
@@ -94,7 +90,7 @@ func (h *handler) Serve(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 		var push github.Push
 		if err := json.Unmarshal(b, &push); err != nil {
 			w.WriteHeader(StatusResponseNotExpected)
-			fmt.Fprintf(w, EUnexpectedBodyFmt, "push", err)
+			fmt.Fprintf(w, handlers.EUnexpectedBodyFmt, "push", err)
 			return
 		}
 		if push.Ref == refMaster {
@@ -109,13 +105,13 @@ func (h *handler) Serve(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 	resp, err := h.gsender.Send(groupID, message)
 	if err != nil {
 		w.WriteHeader(http.StatusServiceUnavailable)
-		fmt.Fprintf(w, ERequest, err)
+		fmt.Fprintf(w, handlers.ERequest, err)
 		return
 	}
 
 	if resp.StatusCode != http.StatusOK {
 		w.WriteHeader(http.StatusServiceUnavailable)
-		fmt.Fprintf(w, EUnexpectedStatus, resp.Status)
+		fmt.Fprintf(w, handlers.EUnexpectedStatus, resp.Status)
 		return
 	}
 }
