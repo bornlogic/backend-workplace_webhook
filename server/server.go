@@ -30,7 +30,7 @@ func (s *server) setupHandlers() {
 	s.router.POST("/github/:groupID", github.NewHandler(
 		workplace.NewGroupSender(s.workplaceAccessToken, s.formatting),
 	).Serve)
-	s.router.POST("/:groupID", generic.NewHandler(
+	s.router.POST("/generic/:groupID", generic.NewHandler(
 		workplace.NewGroupSender(s.workplaceAccessToken, s.formatting),
 	).Serve)
 }
